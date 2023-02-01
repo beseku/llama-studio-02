@@ -1,0 +1,103 @@
+{{ define "main" }}
+{{ $page := . }}
+<div class="site_main_area__region">
+  <section class="lead">
+    <h1 class="lead__head_1°">
+      {{ $page.Summary }}
+    </h1>
+  </section>
+</div>
+<div class="site_main_area__region">
+  <section class="card">
+    <header class="card__header">
+      <h1 class="card__head_1°">
+        Featured case study
+      </h1>
+    </header>
+    <div class="card__region">
+      <div class="grid grid--1_up@mobile grid--1_up@fablet grid--1_up@tablet_portrait grid--1_up@tablet_landscape grid--1_up@laptop grid--1_up@cinema">
+        <ul class="grid__list">
+          {{ range (where (.Site.GetPage "/work").Pages "Params.Category" "in" (slice "Case study")) }}
+          {{ $post := . }}
+          <li class="grid__node">
+            <a class="cell" data-category="{{ lower $post.Params.Category }}" data-client="{{ lower $post.Params.Client }}" href="{{ $post.RelPermalink }}">
+              {{ with ($post.Resources.GetMatch "images/cell*") }}
+              <header class="cell__header">
+                <picture>
+                  <source media="(max-width:666px)" srcset="{{ (.Fill "750x375 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:667px) and (max-width:767px)" srcset="{{ (.Fill "1334x667 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:768px) and (max-width:1023px)" srcset="{{ (.Fill "1536x768 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:1024px) and (max-width:1279px)" srcset="{{ (.Fill "2048x1024 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:1280px) and (max-width:1679px)" srcset="{{ (.Fill "2560x1280 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:1680px)" srcset="{{ (.Fill "3360x1680 Center").RelPermalink }}" type="{{ .MediaType }}">
+              
+                  <img src="{{ (.Fill "2560x1280 Center").RelPermalink }}" alt="Cover image - '{{ $post.Title }}'">
+                </picture>
+              </header>
+              {{ end }}
+              
+              <footer class="cell__region">
+                <h1 class="cell__head_1°">
+                  {{ $post.Params.Client }}
+                </h1>
+              
+                <h2 class="cell__head_2°">
+                  {{ $post.Title }}.
+                </h2>
+              </footer>
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </div>        
+    </div>
+  </section>
+</div>
+<div class="site_main_area__region">
+  <section class="card">
+    <header class="card__header">
+      <h1 class="card__head_1°">
+        Recent work
+      </h1>
+    </header>
+    <div class="card__region">
+      <div class="grid grid--1_up@mobile grid--2_up@fablet grid--2_up@tablet_portrait grid--2_up@tablet_landscape grid--2_up@laptop grid--2_up@cinema">
+        <ul class="grid__list">
+          {{ range (where (.Site.GetPage "/work").Pages "Params.Category" "in" (slice "Project")) }}
+          {{ $post := . }}
+          <li class="grid__node">
+            <a class="cell" data-category="{{ lower $post.Params.Category }}" data-client="{{ lower $post.Params.Client }}" href="{{ $post.RelPermalink }}">
+              {{ with ($post.Resources.GetMatch "images/cell*") }}
+              <header class="cell__header">
+                <picture>
+                  <source media="(max-width:666px)" srcset="{{ (.Fill "750x375 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:667px) and (max-width:767px)" srcset="{{ (.Fill "1334x667 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:768px) and (max-width:1023px)" srcset="{{ (.Fill "1536x768 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:1024px) and (max-width:1279px)" srcset="{{ (.Fill "2048x1024 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:1280px) and (max-width:1679px)" srcset="{{ (.Fill "2560x1280 Center").RelPermalink }}" type="{{ .MediaType }}">
+                  <source media="(min-width:1680px)" srcset="{{ (.Fill "3360x1680 Center").RelPermalink }}" type="{{ .MediaType }}">
+              
+                  <img src="{{ (.Fill "2560x1280 Center").RelPermalink }}" alt="Cover image - '{{ $post.Title }}'">
+                </picture>
+              </header>
+              {{ end }}
+              
+              <footer class="cell__region">
+                <h1 class="cell__head_1°">
+                  {{ $post.Params.Client }}
+                </h1>
+              
+                <h2 class="cell__head_2°">
+                  {{ $post.Title }}.
+                </h2>
+              </footer>
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </div> 
+    </div>
+  </section>
+</div>
+
+{{ end }}

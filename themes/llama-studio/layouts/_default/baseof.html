@@ -1,0 +1,130 @@
+{{ $page := . }}
+
+<!DOCTYPE html>
+<html data-theme="dark" lang="{{ $.Site.LanguageCode | default "en" }}">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    
+    <meta content="Llama Studio Ltd." name="author">
+    <meta content="{{ $page.Summary | default "" }}" name="description">
+    
+    <meta content="index,follow" name="robots">
+    <meta content="index,follow" name="googlebot">
+    <meta content="on" name="twitter:dnt">
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{{ $page.Summary | default "" }}" />
+    <meta property="og:title" content="{{ $page.Title | default "Untitled" }}" />
+    <meta property="og:url" content="{{ $page.RelPermalink }}" />
+    
+    {{ with ($.Resources.GetMatch "opengraph*") }}
+    <meta property="og:image" content="{{ (.Fill "1200x630 Center jpg").RelPermalink }}" />
+    <meta property="og:image:alt" content="Cover image for this page" />
+    {{ end }}
+    
+    <!-- icons -->
+    <link rel="apple-touch-icon" href="{{ $.Site.BaseURL }}apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="{{ $.Site.BaseURL }}favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="{{ $.Site.BaseURL }}favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="{{ $.Site.BaseURL }}icon.png" sizes="192x192" type="image/png">
+    
+    <link color="#000000" href="{{ $.Site.BaseURL }}safari-pinned-tab.svg" rel="mask-icon">
+    
+    <!-- fonts -->
+    <link href="https://use.typekit.net/bjg1obq.css" rel="stylesheet">
+    
+    <!-- javascripts -->
+    {{ $javascripts := slice (resources.Get "javascripts/llama-studio.js") }}
+    
+    {{ with $.Site.Params.javaScripts }}
+    {{ range . }}
+      {{ $javascripts = $javascripts | append (slice (resources.Get .)) }}
+    {{ end }}
+    {{ end }}
+    {{ $javascript := $javascripts | resources.Concat "javascripts/llama-studio.js" | resources.Minify | fingerprint }}
+    <script integrity="{{ $javascript.Data.Integrity }}" src="{{ $javascript.RelPermalink }}" type="text/javascript"></script>
+    
+    <!-- stylesheets -->    
+    {{ $stylesheets := slice (resources.Get "stylesheets/llama-studio.scss") }}
+    
+    {{ with $.Site.Params.styleSheets }}
+    {{ range . }}
+      {{ $stylesheets = $stylesheets | append (slice (resources.Get .)) }}
+    {{ end }}
+    {{ end }}
+    {{ $stylesheet := $stylesheets | resources.Concat "stylesheets/llama-studio" | toCSS | resources.Minify | fingerprint }}
+    <link href="{{ $stylesheet.RelPermalink }}" integrity="{{ $stylesheet.Data.Integrity }}" rel="stylesheet" type="text/css" />
+    
+    <title>{{ $.Title | default "Untitled" }}&thinsp;&mdash;&thinsp;{{ $.Site.Title }}</title>
+  </head>
+  <body id="ue">
+    <header class="site_header_area">
+      <div class="site_header_area__region">
+        <a class="logo" href="/">Llama Studio</a>
+      </div>
+      <div class="site_header_area__region">
+        <menu class="menu">
+          <ul class="menu__list">
+            <li class="menu__node">
+              <a class="menu__link hover" href="/">
+                <strong> En<span class="hide@fablet hide@tablet_portrait">glish</span></strong>
+              </a>
+            </li>
+            <li class="menu__node">
+              <a class="menu__link disabled" href="/">
+                Es<span class="hide@fablet hide@tablet_portrait">pañol</span>
+              </a>
+            </li>
+          </ul>
+        </menu>
+      </div>      
+    </header>
+    <main class="site_main_area">
+      {{ block "main" $page }}{{ end }}
+    </main>
+    <nav class="site_menu_area">
+      <div class="site_menu_area__region">
+        <menu class="menu menu--cols@mobile menu--rows@fablet menu--rows@tablet_portrait menu--rows@tablet_landscape menu--rows@laptop menu--rows@cinema">
+          <ul class="menu__list">
+            <li class="menu__node">
+              <a class="menu__link" href="/">Work</a>
+            </li>
+            <li class="menu__node">
+              <a class="menu__link" href="/about">About</a>
+            </li>
+            <li class="menu__node">
+              <a class="menu__link" href="mailto:hey@llama.studio?subject=Hey<20Llama<20Studio!">Contact</a>
+            </li>
+          </ul>
+        </menu>
+      </div>  
+    </nav>
+    <footer class="site_footer_area">
+      <div class="site_footer_area__region">
+        <menu class="menu menu--cols@mobile">
+          <ul class="menu__list">
+            <li class="menu__node">
+              <a class="menu__link" href="https://www.linkedin.com/company/llama-studio-ltd/">LinkedIn</a>
+            </li>
+            <li class="menu__node">
+              <a class="menu__link" href="https://medium.com/llama-studio">Medium</a>
+            </li>
+            <li class="menu__node">
+              <a class="menu__link" href="https://twitter.com/llamastudioltd">Twitter</a>
+            </li>
+          </ul>
+        </menu>
+      </div>
+      <div class="site_footer_area__region">
+        <menu class="menu menu--cols@mobile">
+          <ul class="menu__list">
+            <li class="menu__node">
+              <span class="menu__text">&copy; Llama Studio Ltd., 2016&thinsp;&mdash;&thinsp;{{ now.Format "2006" }}.</span>
+            </li>
+          </ul>
+        </menu>
+      </div>
+    </footer>
+  </body>
+</html>

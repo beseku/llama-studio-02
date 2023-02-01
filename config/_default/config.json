@@ -1,0 +1,14 @@
+{
+  "baseURL": "/",
+  "languageCode": "en-GB",
+  "title": "Llama Studio",
+  "theme": "llama-studio",
+  "permalinks": {
+    "work": ":section/:slug"
+  },
+  "markup": {
+    "goldmark": {
+      "renderer": { "unsafe": true }
+    }
+  }
+}

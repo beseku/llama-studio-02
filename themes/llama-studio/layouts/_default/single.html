@@ -1,0 +1,26 @@
+{{ define "main" }} 
+{{ $page := . }}
+<div class="site_main_area__region">
+  <article class="post">
+    {{ if eq $page.Params.Category "Case study" }}
+    <header class="post__header">
+      <h1 class="post__head_1°">{{ $page.Title }}.</h1>
+      
+      <div class="meta">
+        <ul class="meta__list">
+          {{ range $page.Params.Tags }}
+          <li class="meta__node">
+            <span class="meta__text">{{ . }}</span>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+    </header>
+    {{ end }}
+    
+    <div class="post__region">
+      {{ $page.Content }}
+    </div>
+  </article>
+</div>
+{{ end }}
